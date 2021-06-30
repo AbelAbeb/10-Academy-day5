@@ -12,7 +12,7 @@ class database:
         self.table_name = table_name
 
     def DBConnect(self):
-        conn = mysql.connect(host='localhost', user='root', password='pass@1221',
+        conn = mysql.connect(host='localhost', user='root', password='root1',
                             database=self.dbName, buffered=True)
         cur = conn.cursor()
         return conn, cur
@@ -31,7 +31,7 @@ class database:
 
     def createTables(self) -> None:
         conn, cur = self.DBConnect()
-        sqlFile = 'sql_schema.sql'
+        sqlFile = 'schema.sql'
         fd = open(sqlFile, 'r')
         readSqlFile = fd.read()
         fd.close()
