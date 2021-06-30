@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS `Tweet4`
     PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
-       ['created_at', 'source', 'clean_text', 'polarity', 'subjectivity',
-       'lang', 'favorite_count', 'retweet_count', 'original_author',
+       ['created_at', 'source', 'clean_text', 'polarity', 'subjectivity', 'lang', 
+        'favorite_count', 'retweet_count', 'original_author',
        'followers_count', 'friends_count', 'hashtags', 'user_mentions', 'place']
        
        
