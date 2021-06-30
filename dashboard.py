@@ -6,9 +6,9 @@ from wordcloud import WordCloud
 import plotly.express as px
 from add_data import db_execute_fetch
 
-st.set_page_config('Topic Modeling and Sentiment Analysis', layout="wide")
+st.set_page_config('Dashboard', layout="wide")
+st.title("Topic Modeling and Sentimet Anlysis")
 st.markdown("***")
-#st.write("## Topic modeling and sentimet anlysis of twiteer data")
 
 
 class dashboard:
@@ -55,18 +55,18 @@ class dashboard:
 
     # draws bar chart of the polarity
     def barChart(self):
-        st.title('Bar Chart')
+        st.title('Bar')
         count = self.polarity_count()
         data = pd.DataFrame({
         'Sentiment': list(count.keys()),
-        'Tweets': [count[key] for key in count.keys()],
+        'label': [count[key] for key in count.keys()],
                     })
-        bar_fig = px.bar(data, x='Sentiment', y='Tweets')
+        bar_fig = px.bar(data, x='Sentiment', y='label')
         st.plotly_chart(bar_fig)
 
     # draws pie chart of the polarity
     def pieChart(self):
-        st.title('Pie Chart')
+        st.title('Pie')
         count = self.polarity_count()
         pie_fig = px.pie(values=[count[key] for key in count.keys()], names=list(count.keys()))
         st.plotly_chart(pie_fig)
@@ -80,7 +80,7 @@ class dashboard:
         long_string = ','.join(list(df['clean_text'].values))
 
         # Create a WordCloud object
-        wordcloud = WordCloud(background_color="black", width=650, height=450, \
+        wordcloud = WordCloud(background_color="white", width=650, height=450, \
                                 min_font_size=5, contour_color='steelblue')
         # Generate a word cloud
         wordcloud.generate(long_string)
@@ -89,13 +89,12 @@ class dashboard:
 
 st1 = dashboard()
 
-polarity = st.selectbox('choose polarity of tweets', ('All', 'positive', 'negative', 'neutral'))
+polarity = st.sidebar.selectbox('choose polarity of tweets', ('All', 'positive', 'negative', 'neutral'))
 st1.display_df_polarity(polarity)
 
-st.markdown("***")
-st.markdown("***")
+st.success("")
 st.title("Visualizations")
-random_tweet = st.selectbox('Visualizations', 
+random_tweet = st.sidebar.selectbox('Visualizations', 
                 ('Topic Modeling','Bar Chart','Pie Chart'))
 if random_tweet == 'Topic Modeling': st1.wordCloud()
 elif random_tweet == 'Bar Chart': st1.barChart()
