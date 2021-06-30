@@ -70,7 +70,26 @@ class dashboard:
         count = self.polarity_count()
         pie_fig = px.pie(values=[count[key] for key in count.keys()], names=list(count.keys()))
         st.plotly_chart(pie_fig)
+        
+    # location of twittes
+    def selectLocAndAuth(self):
+        df = self.loadData()
+        location = st.multiselect("choose Location of tweets", list(df['place_coordinate'].unique()))
+        lang = st.multiselect("choose Language of tweets", list(df['language'].unique()))
 
+        if location and not lang:
+            df = df[np.isin(df, location).any(axis=1)]
+            st.write(df)
+        elif lang and not location:
+            df = df[np.isin(df, lang).any(axis=1)]
+            st.write(df)
+        elif lang and location:
+            location.extend(lang)
+            df = df[np.isin(df, location).any(axis=1)]
+            st.write(df)
+        else:
+            st.write(df)
+        
     # topic modeling
     def wordCloud(self):
         df = self.loadData()
@@ -88,7 +107,7 @@ class dashboard:
         st.image(wordcloud.to_array())
 
 st1 = dashboard()
-
+st1.selectLocAndAuth()
 polarity = st.sidebar.selectbox('choose polarity of tweets', ('All', 'positive', 'negative', 'neutral'))
 st1.display_df_polarity(polarity)
 
